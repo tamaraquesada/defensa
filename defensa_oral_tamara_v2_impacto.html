@@ -1,0 +1,430 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+--c1:#0F2A4A;--c2:#1D4370;--c3:#185FA5;--c4:#1D9E75;--c5:#0F6E56;
+--white:#fff;--offwhite:#F0F6FF;--muted:rgba(255,255,255,0.65);--subtle:rgba(255,255,255,0.15);
+}
+body{font-family:var(--font-sans,system-ui,sans-serif);background:transparent}
+.pres{width:100%;max-width:960px;margin:0 auto;border-radius:16px;overflow:hidden;border:0.5px solid rgba(0,0,0,0.12)}
+.slide{display:none;min-height:460px;position:relative;animation:fadeIn 0.35s ease}
+.slide.active{display:flex;flex-direction:column}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.nav-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;background:#0a1929;border-top:1px solid rgba(255,255,255,0.08)}
+.nav-btn{background:transparent;border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:7px 18px;font-size:13px;cursor:pointer;color:rgba(255,255,255,0.8);transition:all 0.15s}
+.nav-btn:hover{background:rgba(255,255,255,0.1);color:#fff}
+.nav-btn:disabled{opacity:0.2;cursor:default}
+.dots{display:flex;gap:5px;align-items:center;flex-wrap:wrap;justify-content:center;max-width:220px}
+.dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.25);transition:all 0.2s;cursor:pointer;border:none;padding:0}
+.dot.active{background:#5DCAA5;transform:scale(1.35)}
+.slide-counter{font-size:11px;color:rgba(255,255,255,0.45);min-width:40px;text-align:right}
+
+/* PORTADA */
+.s-cover{background:linear-gradient(135deg,#0a1929 0%,#0F2A4A 40%,#0F6E56 100%);padding:52px 52px 40px;justify-content:space-between}
+.cover-eyebrow{font-size:11px;letter-spacing:0.12em;color:rgba(255,255,255,0.5);text-transform:uppercase;margin-bottom:20px}
+.cover-title{font-size:38px;font-weight:500;color:#fff;line-height:1.18;margin-bottom:16px}
+.cover-title span{color:#5DCAA5}
+.cover-lema{font-size:15px;color:rgba(255,255,255,0.7);line-height:1.7;max-width:560px;border-left:3px solid #5DCAA5;padding-left:16px;margin:20px 0 32px}
+.cover-stats{display:flex;gap:32px}
+.cstat{text-align:center}
+.cstat-num{font-size:36px;font-weight:500;color:#5DCAA5;line-height:1}
+.cstat-label{font-size:11px;color:rgba(255,255,255,0.5);margin-top:4px;line-height:1.4}
+.cover-name{font-size:13px;color:rgba(255,255,255,0.4);margin-top:8px}
+
+/* DARK SLIDE (norma, cooperativo) */
+.s-dark{background:#0F2A4A;padding:36px 44px;color:#fff}
+.s-dark2{background:#0a1929;padding:36px 44px;color:#fff}
+
+/* COLOR SLIDE */
+.s-green{background:linear-gradient(135deg,#0F6E56 0%,#085041 100%);padding:36px 44px;color:#fff}
+.s-blue{background:linear-gradient(135deg,#185FA5 0%,#0C447C 100%);padding:36px 44px;color:#fff}
+.s-teal{background:linear-gradient(135deg,#1D9E75 0%,#0F6E56 100%);padding:36px 44px;color:#fff}
+.s-navy{background:linear-gradient(135deg,#1D4370 0%,#0F2A4A 100%);padding:36px 44px;color:#fff}
+.s-mixed{background:linear-gradient(135deg,#0C447C 0%,#085041 100%);padding:36px 44px;color:#fff}
+
+.slide-tag{display:inline-block;font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:3px 10px;border-radius:20px;background:rgba(255,255,255,0.12);color:rgba(255,255,255,0.8);margin-bottom:12px}
+.slide-h{font-size:24px;font-weight:500;color:#fff;line-height:1.25;margin-bottom:6px}
+.slide-sub{font-size:13px;color:rgba(255,255,255,0.55);line-height:1.5;margin-bottom:22px}
+.slide-body{flex:1;display:flex;flex-direction:column;justify-content:flex-start}
+
+/* CARDS sobre color */
+.cc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.cc-grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.cc{background:rgba(255,255,255,0.1);border-radius:10px;padding:14px 16px;border:1px solid rgba(255,255,255,0.12)}
+.cc-title{font-size:12px;font-weight:500;color:#fff;margin-bottom:5px}
+.cc-body{font-size:11px;color:rgba(255,255,255,0.7);line-height:1.55}
+.cc-num{font-size:32px;font-weight:500;color:#5DCAA5;line-height:1;margin-bottom:4px}
+.cc-label{font-size:11px;color:rgba(255,255,255,0.6);line-height:1.4}
+
+/* LAYERS */
+.layer{display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-radius:10px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);margin-bottom:7px}
+.layer-n{width:22px;height:22px;border-radius:50%;background:#5DCAA5;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:#0F2A4A;flex-shrink:0;margin-top:1px}
+.layer-t{font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5}
+.layer-t b{font-weight:500;color:#fff}
+
+/* FLECHAS proceso */
+.arrow-steps{display:flex;align-items:center;gap:0;margin:0 0 16px}
+.astep{flex:1;text-align:center;padding:9px 4px;font-size:10px;font-weight:500;color:#fff;background:rgba(255,255,255,0.15);position:relative;line-height:1.3}
+.astep:first-child{border-radius:8px 0 0 8px}
+.astep:last-child{border-radius:0 8px 8px 0}
+.astep::after{content:'';position:absolute;right:-9px;top:0;bottom:0;width:18px;background:rgba(255,255,255,0.15);clip-path:polygon(0 0,100% 50%,0 100%);z-index:2}
+.astep:last-child::after{display:none}
+.astep.hl{background:rgba(93,202,165,0.35)}
+.astep.hl::after{background:rgba(93,202,165,0.35)}
+
+/* EJES */
+.eje{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-radius:10px;margin-bottom:8px}
+.eje.a{background:rgba(255,255,255,0.08);border-left:3px solid #5DCAA5}
+.eje.b{background:rgba(255,255,255,0.08);border-left:3px solid #FAC775}
+.eje.c{background:rgba(255,255,255,0.08);border-left:3px solid #AFA9EC}
+.eje-badge{font-size:11px;font-weight:500;padding:3px 9px;border-radius:20px;flex-shrink:0;margin-top:1px}
+.eje.a .eje-badge{background:#5DCAA5;color:#04342C}
+.eje.b .eje-badge{background:#FAC775;color:#412402}
+.eje.c .eje-badge{background:#AFA9EC;color:#26215C}
+.eje-text{font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5}
+.eje-text b{font-weight:500;color:#fff}
+
+/* IND */
+.ind3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.ind-c{background:rgba(255,255,255,0.08);border-radius:10px;padding:14px;border:1px solid rgba(255,255,255,0.1)}
+.ind-c-title{font-size:12px;font-weight:500;color:#fff;margin-bottom:5px}
+.ind-c-body{font-size:11px;color:rgba(255,255,255,0.65);line-height:1.5}
+.ind-step{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,0.06);margin-bottom:6px;font-size:12px;color:rgba(255,255,255,0.8)}
+.ind-step-badge{font-size:10px;font-weight:500;padding:2px 9px;border-radius:20px;flex-shrink:0;white-space:nowrap}
+.is-green{background:#5DCAA5;color:#04342C}
+.is-blue{background:#85B7EB;color:#042C53}
+.is-amber{background:#FAC775;color:#412402}
+
+/* NORMA CAPS */
+.ncap{display:flex;align-items:flex-start;gap:10px;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.08);margin-bottom:6px}
+.ncap-label{font-size:10px;font-weight:500;padding:2px 8px;border-radius:20px;flex-shrink:0;white-space:nowrap}
+.nl-eu{background:#85B7EB;color:#042C53}
+.nl-an{background:#5DCAA5;color:#04342C}
+.nl-pri{background:#FAC775;color:#412402}
+.nl-dig{background:#AFA9EC;color:#26215C}
+.nl-conv{background:rgba(255,255,255,0.2);color:#fff}
+.nl-cep{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.9)}
+.ncap-text{font-size:12px;color:rgba(255,255,255,0.75);line-height:1.4}
+.ncap-text b{font-weight:500;color:#fff}
+
+/* CONTEXTO BIG */
+.ctx-big{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.ctx-stat{background:rgba(255,255,255,0.08);border-radius:10px;padding:16px;text-align:center;border:1px solid rgba(255,255,255,0.1)}
+.ctx-num{font-size:42px;font-weight:500;color:#5DCAA5;line-height:1}
+.ctx-unit{font-size:16px;color:rgba(255,255,255,0.5)}
+.ctx-label{font-size:12px;color:rgba(255,255,255,0.65);margin-top:6px;line-height:1.4}
+.ctx-list{display:flex;flex-direction:column;gap:6px}
+.ctx-item{font-size:12px;color:rgba(255,255,255,0.8);display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.ctx-item::before{content:'→';color:#5DCAA5;font-weight:500;flex-shrink:0}
+
+/* MODELO */
+.mod4{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.mod-c{background:rgba(255,255,255,0.08);border-radius:10px;padding:13px;border-top:2px solid}
+.mod-c.m1{border-color:#5DCAA5}
+.mod-c.m2{border-color:#85B7EB}
+.mod-c.m3{border-color:#FAC775}
+.mod-c.m4{border-color:#AFA9EC}
+.mod-c-title{font-size:12px;font-weight:500;color:#fff;margin-bottom:4px}
+.mod-c-body{font-size:11px;color:rgba(255,255,255,0.65);line-height:1.5}
+.princs{display:flex;gap:8px}
+.princ{flex:1;padding:9px 11px;border-radius:8px;background:rgba(255,255,255,0.06);font-size:11px;color:rgba(255,255,255,0.75);text-align:center;line-height:1.4}
+.princ b{display:block;font-weight:500;color:#5DCAA5;margin-bottom:3px;font-size:11px}
+
+/* CD */
+.cd4{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cd-c{background:rgba(255,255,255,0.08);border-radius:10px;padding:14px;border:1px solid rgba(255,255,255,0.1)}
+.cd-c-title{font-size:12px;font-weight:500;color:#5DCAA5;margin-bottom:5px}
+.cd-c-body{font-size:11px;color:rgba(255,255,255,0.7);line-height:1.55}
+
+/* COOP */
+.coop2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.coop-col{background:rgba(255,255,255,0.07);border-radius:10px;padding:14px;border:1px solid rgba(255,255,255,0.09)}
+.coop-col-h{font-size:12px;font-weight:500;color:#fff;margin-bottom:10px;padding-bottom:7px;border-bottom:1px solid rgba(255,255,255,0.1)}
+.coop-item{font-size:11px;color:rgba(255,255,255,0.7);line-height:1.6;padding:2px 0;display:flex;gap:7px}
+.coop-item::before{content:'·';color:#5DCAA5;font-weight:700;flex-shrink:0}
+
+/* CIERRE */
+.cierre-quote{font-size:20px;font-weight:500;color:#fff;line-height:1.5;border-left:4px solid #5DCAA5;padding-left:20px;margin:16px 0 24px}
+.cierre4{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.cierre-c{background:rgba(255,255,255,0.08);border-radius:10px;padding:13px;font-size:12px;color:rgba(255,255,255,0.7);line-height:1.5}
+.cierre-c b{display:block;font-weight:500;color:#fff;margin-bottom:4px}
+
+/* PRÁCTICA */
+.prac3{display:flex;flex-direction:column;gap:9px}
+.prac-c{background:rgba(255,255,255,0.08);border-radius:10px;padding:13px 16px;border-left:3px solid;display:flex;gap:12px}
+.prac-c.p1{border-color:#5DCAA5}
+.prac-c.p2{border-color:#85B7EB}
+.prac-c.p3{border-color:#AFA9EC}
+.prac-num{font-size:20px;font-weight:500;color:rgba(255,255,255,0.25);flex-shrink:0;min-width:24px}
+.prac-text{font-size:12px;color:rgba(255,255,255,0.8);line-height:1.55}
+.prac-text b{font-weight:500;color:#fff}
+
+/* DINAM */
+.din2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.din-col{background:rgba(255,255,255,0.07);border-radius:10px;padding:14px}
+.din-col-h{font-size:12px;font-weight:500;color:#fff;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.din-col-h span{background:rgba(255,255,255,0.12);border-radius:20px;padding:2px 9px;font-size:10px;color:rgba(255,255,255,0.7)}
+.din-item{font-size:11px;color:rgba(255,255,255,0.7);line-height:1.6;padding:2px 0;display:flex;gap:7px}
+.din-item::before{content:'→';color:#5DCAA5;font-weight:500;flex-shrink:0}
+</style>
+
+<div class="pres" id="pres">
+  <div id="slideWrap"></div>
+  <div class="nav-bar">
+    <button class="nav-btn" id="prevBtn" onclick="go(-1)" disabled>← Anterior</button>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:7px">
+      <div class="dots" id="dotsRow"></div>
+      <span class="slide-counter" id="sc">1 / 13</span>
+    </div>
+    <button class="nav-btn" id="nextBtn" onclick="go(1)">Siguiente →</button>
+  </div>
+</div>
+
+<script>
+const SLIDES=[
+{bg:'s-cover',html:`
+<div style="display:flex;flex-direction:column;justify-content:space-between;height:100%;min-height:420px">
+<div>
+  <div class="cover-eyebrow">CEP de Málaga · Concurso de méritos · Asesoría de referencia · Educación Primaria</div>
+  <div class="cover-title">Una asesoría que <span>escucha</span>,<br>acompaña y evalúa<br>con honestidad.</div>
+  <div class="cover-lema">El cambio educativo profundo no depende sólo del esfuerzo individual. Necesita acompañamiento, criterio y una planificación capaz de convertir la voluntad de mejora en acciones reales y compartidas.</div>
+</div>
+<div>
+  <div class="cover-stats">
+    <div class="cstat"><div class="cstat-num">12</div><div class="cstat-label">años en la escuela pública andaluza</div></div>
+    <div class="cstat"><div class="cstat-num">10</div><div class="cstat-label">como tutora de Primaria</div></div>
+    <div class="cstat"><div class="cstat-num">3</div><div class="cstat-label">pilares: acompañamiento · evidencia · transferencia</div></div>
+  </div>
+  <div class="cover-name" style="margin-top:18px">Tamara Quesada Salazar · tquesal351@g.educaand.es</div>
+</div>
+</div>`},
+
+{bg:'s-dark',html:`
+<span class="slide-tag">Marco normativo</span>
+<div class="slide-h">Cinco capas normativas que sostienen el proyecto</div>
+<div class="slide-sub">De la legislación estatal a la concreción en el CEP de Málaga</div>
+<div class="slide-body">
+<div class="ncap"><span class="ncap-label nl-eu">Estatal</span><span class="ncap-text"><b>LOMLOE</b> arts. 102–103 · formación permanente como derecho y obligación del profesorado</span></div>
+<div class="ncap"><span class="ncap-label nl-an">Andalucía</span><span class="ncap-text"><b>LEA</b> arts. 19–20 · <b>Decreto 93/2013</b>: asesoría como agente de acompañamiento, diagnóstico, dinamización y evaluación</span></div>
+<div class="ncap"><span class="ncap-label nl-pri">Primaria</span><span class="ncap-text"><b>Decreto 101/2023</b> + Orden 30 mayo 2023 · SdA, evaluación criterial e inclusión desde el diseño</span></div>
+<div class="ncap"><span class="ncap-label nl-dig">Digital</span><span class="ncap-text"><b>III Plan Andaluz</b> (Orden 31 jul 2014) · <b>Resolución 20 ago 2025</b> · <b>MRCDD</b> Resolución 4 mayo 2022</span></div>
+<div class="ncap"><span class="ncap-label nl-conv">Convocatoria</span><span class="ncap-text"><b>Resolución 22 abril 2026</b> · cobertura de esta convocatoria</span></div>
+<div class="ncap"><span class="ncap-label nl-cep">CEP Málaga</span><span class="ncap-text"><b>Plan de Centro</b> y <b>Proyecto de Formación 2025–26</b> · donde la norma se convierte en guía real de actuación</span></div>
+</div>`},
+
+{bg:'s-teal',html:`
+<span class="slide-tag">Contextualización</span>
+<div class="slide-h">El territorio del CEP de Málaga</div>
+<div class="slide-sub">Un contexto amplio, diverso y exigente que condiciona el asesoramiento</div>
+<div class="slide-body">
+<div class="ctx-big">
+  <div class="ctx-stat"><div class="ctx-num">514<span class="ctx-unit"> ctros.</span></div><div class="ctx-label">18 zonas unificadas · 14 municipios del litoral al Valle del Guadalhorce</div></div>
+  <div class="ctx-stat"><div class="ctx-num">135<span class="ctx-unit"> CEIP</span></div><div class="ctx-label">130 CEIP · 4 C.E.PR. · 1 C.P.R. · ~12.500 docentes</div></div>
+</div>
+<div style="margin-bottom:8px;font-size:11px;font-weight:500;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:0.08em">Perfil del profesorado de Primaria</div>
+<div class="ctx-list">
+  <div class="ctx-item"><span style="font-size:20px;font-weight:500;color:#5DCAA5;flex-shrink:0;line-height:1">84%</span> supera los 36 años → profesorado con experiencia que demanda formación contextualizada</div>
+  <div class="ctx-item"><span style="font-size:20px;font-weight:500;color:#FAC775;flex-shrink:0;line-height:1">40%</span> lleva menos de 3 años en su centro → necesidad de cohesión institucional y proyectos sostenibles</div>
+  <div class="ctx-item">Reto prioritario del territorio: inclusión y diversidad · traducción competencial y digital a prácticas de aula</div>
+</div>
+</div>`},
+
+{bg:'s-navy',html:`
+<span class="slide-tag">Modelo de asesoría</span>
+<div class="slide-h">Acompañamiento · evidencia · transferencia</div>
+<div class="slide-sub">Cuatro rasgos operativos · cuatro principios de actuación (Figura 7 del proyecto)</div>
+<div class="slide-body">
+<div class="mod4" style="margin-bottom:12px">
+  <div class="mod-c m1"><div class="mod-c-title">Centro como organización que aprende</div><div class="mod-c-body">La unidad de intervención es el centro. El aprendizaje es colectivo.</div></div>
+  <div class="mod-c m2"><div class="mod-c-title">Carácter colaborativo y horizontal</div><div class="mod-c-body">Acuerdos con equipos directivos y CoFo. Asesoramiento colaborativo (Domingo Segovia).</div></div>
+  <div class="mod-c m3"><div class="mod-c-title">Orientado por evidencias institucionales</div><div class="mod-c-body">Decisiones basadas en datos: Séneca, Memorias, indicadores homologados.</div></div>
+  <div class="mod-c m4"><div class="mod-c-title">Sistemático · orientado al impacto</div><div class="mod-c-body">La formación sólo tiene sentido si genera cambios observables en el aula.</div></div>
+</div>
+<div class="princs">
+  <div class="princ"><b>Reflexión</b>sobre la práctica (Schön)</div>
+  <div class="princ"><b>Coherencia</b>institucional</div>
+  <div class="princ"><b>Inclusión</b>y equidad · DUA v3.0</div>
+  <div class="princ"><b>Autonomía</b>profesional</div>
+</div>
+</div>`},
+
+{bg:'s-blue',html:`
+<span class="slide-tag">Diagnóstico</span>
+<div class="slide-h">Diagnóstico riguroso: la base de toda intervención</div>
+<div class="slide-sub">Cuatro momentos · múltiples fuentes · triangulación (Figura 8 · Tabla 3)</div>
+<div class="slide-body">
+<div class="arrow-steps" style="margin-bottom:14px">
+  <div class="astep">Abr–May<br>revisión documental</div>
+  <div class="astep">Junio<br>propuesta inicial</div>
+  <div class="astep">Septiembre<br>ajuste plantilla</div>
+  <div class="astep">Octubre<br>concreción</div>
+  <div class="astep hl">≤ 31 oct<br>Informe Ejecutivo</div>
+</div>
+<div class="layer"><span class="layer-n">1</span><span class="layer-t"><b>Fuentes documentales:</b> Memoria Autoevaluación · Plan Mejora · Indicadores Séneca · Plan Formación anterior</span></div>
+<div class="layer"><span class="layer-n">2</span><span class="layer-t"><b>Fuentes directas:</b> entrevistas con equipo directivo · ETCP · CoFo · formulario de demandas formativas</span></div>
+<div class="layer"><span class="layer-n">3</span><span class="layer-t"><b>Diagnóstico digital de zona:</b> formulario CompDigEdu de los centros (propuesta propia)</span></div>
+<div class="layer"><span class="layer-n">4</span><span class="layer-t"><b>Encuestas de satisfacción</b> del curso anterior · contraste asesorías Primaria → <b>Informe de Asesorías por Ámbito</b></span></div>
+</div>`},
+
+{bg:'s-dark2',html:`
+<span class="slide-tag">Planificación</span>
+<div class="slide-h">Planificación vinculada al III Plan Andaluz</div>
+<div class="slide-sub">Tres ejes prioritarios · Resolución 20 agosto 2025 · Tabla 4 del proyecto</div>
+<div class="slide-body">
+<div class="eje a"><span class="eje-badge">Eje A</span><span class="eje-text"><b>Inclusión y atención a la diversidad</b> (Línea I, apt. 2) — FC con DUA y codocencia · GT para equipos reducidos centrados en práctica concreta</span></div>
+<div class="eje b"><span class="eje-badge">Eje B</span><span class="eje-text"><b>Competencias instrumentales y desarrollo curricular</b> (Línea I, apt. 1) — FC: acuerdos de claustro sobre SdA y evaluación criterial · GT: lectoescritura, razonamiento matemático, codiseño</span></div>
+<div class="eje c"><span class="eje-badge">Eje C</span><span class="eje-text"><b>Competencia digital y transformación metodológica</b> (Línea III, apt. 1) — del uso instrumental a la integración pedagógica real · modelo Aula del Futuro en centros con ADI</span></div>
+<div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+  <span style="font-size:11px;padding:4px 11px;border-radius:20px;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.75)">FC · mínimo 50% claustro</span>
+  <span style="font-size:11px;padding:4px 11px;border-radius:20px;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.75)">GT · 3–10 docentes</span>
+  <span style="font-size:11px;padding:4px 11px;border-radius:20px;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.75)">Curso de zona (sin FC)</span>
+  <span style="font-size:11px;padding:4px 11px;border-radius:20px;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.75)">Tabla 4 con plazos operativos</span>
+</div>
+</div>`},
+
+{bg:'s-green',html:`
+<span class="slide-tag">Análisis de práctica docente</span>
+<div class="slide-h">Observar con criterio lo que ocurre en el aula</div>
+<div class="slide-sub">Art. 49.4.b Decreto 93/2013 · tres vías complementarias</div>
+<div class="slide-body">
+<div class="prac3">
+  <div class="prac-c p1"><div class="prac-num">01</div><div class="prac-text"><b>Evaluar para mejorar:</b> revisar con los Equipos de Ciclo los criterios de evaluación, instrumentos de triangulación de evidencias y registro en Séneca.</div></div>
+  <div class="prac-c p2"><div class="prac-num">02</div><div class="prac-text"><b>Prácticas reflexivas en FC y GT:</b> observación entre iguales —breve, pactada, centrada en un foco concreto— con devolución descriptiva orientada a la mejora.</div></div>
+  <div class="prac-c p3"><div class="prac-num">03</div><div class="prac-text"><b>Ciclos de indagación compartida (Elliott):</b> identificar un problema de práctica → diseñar SdA → aplicar → recoger evidencias → analizar conjuntamente → acuerdos metodológicos por ciclo.</div></div>
+</div>
+</div>`},
+
+{bg:'s-mixed',html:`
+<span class="slide-tag">Dinamización · programas · difusión</span>
+<div class="slide-h">Conectar, impulsar y hacer visibles las buenas prácticas</div>
+<div class="slide-sub">Relación estable con centros · cinco fases (Fig. 10) · Seminario Intercentros</div>
+<div class="slide-body">
+<div class="din2">
+  <div class="din-col">
+    <div class="din-col-h">Estrategias de dinamización <span>Fig. 10</span></div>
+    <div class="din-item">Relación estable y periódica con equipo directivo y CoFo</div>
+    <div class="din-item">5 fases: diagnóstico · diseño · implementación · evaluación · continuidad</div>
+    <div class="din-item">3 momentos FC/GT: arranque, seguimiento intermedio, cierre</div>
+    <div class="din-item">Registro sistemático en Libro de Visitas de Séneca</div>
+    <div class="din-item">Refuerzo en Comunidades de Aprendizaje</div>
+  </div>
+  <div class="din-col">
+    <div class="din-col-h">Programas y difusión</div>
+    <div class="din-item">Programas Resolución 1 sept 2025: ComunicA · STEM · Plan Igualdad</div>
+    <div class="din-item">Dimensión europea: Erasmus+ · eTwinning</div>
+    <div class="din-item">Propuesta: Encuentros de CoFo de zona</div>
+    <div class="din-item">Propuesta: Seminario Intercentros de Buenas Prácticas</div>
+    <div class="din-item">Difusión: blog CEP · Portal Experiencias Educativas de Éxito</div>
+  </div>
+</div>
+</div>`},
+
+{bg:'s-dark',html:`
+<span class="slide-tag">Competencia digital docente</span>
+<div class="slide-h">Del mandato legal a la transformación pedagógica real</div>
+<div class="slide-sub">Art. 49.4.i Decreto 93/2013 · DigCompEdu · MRCDD · CompDigEdu · EcoDigEdu</div>
+<div class="slide-body">
+<div class="cd4">
+  <div class="cd-c"><div class="cd-c-title">Marco de referencia</div><div class="cd-c-body">DigCompEdu (docente) · DigCompOrg (centro) · CompDigEdu: acreditación de la Junta de Andalucía · MRCDD como traducción al sistema educativo</div></div>
+  <div class="cd-c"><div class="cd-c-title">Itinerarios diferenciados</div><div class="cd-c-body">Docentes en acreditación → evidencias reales de aula · Docentes avanzados → SdA con tecnología, REA, Séneca pedagógico</div></div>
+  <div class="cd-c"><div class="cd-c-title">SELFIE · diagnóstico institucional</div><div class="cd-c-body">Herramienta gratuita (Comisión Europea) · percepción anónima de profesorado, directivos y alumnado · orienta el plan de actuación digital del centro</div></div>
+  <div class="cd-c"><div class="cd-c-title">Modelo Aula del Futuro · EcoDigEdu</div><div class="cd-c-body">Del manejo técnico al uso didáctico real · metodologías activas, inclusivas y competenciales en centros con ADI</div></div>
+</div>
+<div style="margin-top:10px;font-size:12px;color:rgba(255,255,255,0.5);padding:8px 14px;background:rgba(255,255,255,0.06);border-radius:8px;border-left:3px solid #5DCAA5">La competencia digital docente solo tiene valor cuando se traduce en <b style="font-weight:500;color:rgba(255,255,255,0.85)">mejores decisiones de aula</b> y en <b style="font-weight:500;color:rgba(255,255,255,0.85)">acuerdos de centro sostenibles</b>.</div>
+</div>`},
+
+{bg:'s-navy',html:`
+<span class="slide-tag">Dinamización del CEP · trabajo cooperativo</span>
+<div class="slide-h">La función asesora pierde eficacia si se ejerce en solitario</div>
+<div class="slide-sub">ETF · coordinación de ámbitos · coasesoramiento · red de formación</div>
+<div class="slide-body">
+<div class="coop2">
+  <div class="coop-col">
+    <div class="coop-col-h">Funcionamiento interno</div>
+    <div class="coop-item">ETF: planificación, diseño de oferta formativa y seguimiento colegiado</div>
+    <div class="coop-item">Coordinación técnica de las 7 asesorías de Primaria</div>
+    <div class="coop-item">Coasesoramiento: NEE e inclusión · Secundaria (tránsito) · digital + TDE</div>
+    <div class="coop-item">Propuesta, diseño y seguimiento de actividades del ámbito</div>
+    <div class="coop-item">Espacios colaborativos digitales corporativos + módulo Séneca</div>
+    <div class="coop-item">Equipo de referencia de autoformación y evaluación del CEP</div>
+  </div>
+  <div class="coop-col">
+    <div class="coop-col-h">Coordinación interinstitucional</div>
+    <div class="coop-item">Inspección Educativa: Plan de Formación vinculado a autoevaluación y mejora</div>
+    <div class="coop-item">EOE: coordinación trimestral vía Comisión de Atención a la Diversidad</div>
+    <div class="coop-item">Red de Formación: Coordinación Provincial · alianzas interCEP · codiseño de actividades</div>
+    <div class="coop-item" style="margin-top:14px;color:rgba(255,255,255,0.45);font-style:italic">Dinamizar el CEP es construir una red profesional capaz de diagnosticar mejor y aprender de su propia práctica.</div>
+  </div>
+</div>
+</div>`},
+
+{bg:'s-blue',html:`
+<span class="slide-tag">Autoevaluación de la práctica asesora</span>
+<div class="slide-h">Un sistema que se exige a sí mismo lo que pide a los centros</div>
+<div class="slide-sub">Art. 29 Decreto 93/2013 · tres tipos de indicadores · tres momentos (Figura 12)</div>
+<div class="slide-body">
+<div class="ind3">
+  <div class="ind-c"><div class="ind-c-title" style="color:#5DCAA5">Indicadores de proceso</div><div class="ind-c-body">Planes tramitados en plazo · presencia sistemática · Informe Ejecutivo por cada centro</div></div>
+  <div class="ind-c"><div class="ind-c-title" style="color:#85B7EB">Indicadores de impacto</div><div class="ind-c-body">Rúbricas en Séneca · SdA con DUA · acuerdos metodológicos en aula ordinaria · madurez digital</div></div>
+  <div class="ind-c"><div class="ind-c-title" style="color:#FAC775">Indicadores de percepción</div><div class="ind-c-body">Satisfacción de equipos directivos y CoFo · índice NPS + cuestionario anual del CEP</div></div>
+</div>
+<div class="ind-step"><span class="ind-step-badge is-green">Inicio</span>Confirmar necesidades y ajustar objetivos del plan de asesoría</div>
+<div class="ind-step"><span class="ind-step-badge is-blue">Mitad</span>Revisar evidencias e introducir cambios · contraste trimestral con asesorías de Primaria</div>
+<div class="ind-step"><span class="ind-step-badge is-amber">Cierre</span>Valorar resultados · Memoria de la Asesoría → contribución directa a la autoevaluación del CEP</div>
+</div>`},
+
+{bg:'s-cover',html:`
+<div style="display:flex;flex-direction:column;justify-content:space-between;height:100%;min-height:420px">
+<div>
+  <div class="cover-eyebrow">Cierre · mensaje final</div>
+  <div class="cover-title" style="font-size:32px">Ampliar el alcance<br>para seguir cuidando<br>lo que más importa.</div>
+  <div class="cover-lema" style="font-size:14px">Aspirar a una asesoría no es salir del aula, sino ampliar su alcance para seguir cuidando, desde otro lugar, lo más importante que ocurre dentro de ella.</div>
+</div>
+<div>
+<div class="cierre4">
+  <div class="cierre-c"><b>Escuchar bien</b>Diagnóstico riguroso, triangulado y consensuado con el centro</div>
+  <div class="cierre-c"><b>Acompañar con criterio</b>Modelo colaborativo, basado en evidencias y orientado al impacto</div>
+  <div class="cierre-c"><b>Evaluar con honestidad</b>Autoevaluación sistemática en tres momentos · Memoria de la Asesoría</div>
+  <div class="cierre-c"><b>Cercanía y rigor técnico</b>Los centros necesitan acompañamiento útil y respeto por su realidad</div>
+</div>
+<div class="cover-name" style="margin-top:16px">Tamara Quesada Salazar · tquesal351@g.educaand.es · CEP de Málaga</div>
+</div>
+</div>`},
+];
+
+let cur=0;
+
+function renderSlide(){
+  const wrap=document.getElementById('slideWrap');
+  const s=SLIDES[cur];
+  wrap.innerHTML=`<div class="slide ${s.bg} active" style="padding:${s.bg==='s-cover'?'52px 52px 40px':'36px 44px'}">${s.html}</div>`;
+  document.getElementById('prevBtn').disabled=cur===0;
+  document.getElementById('nextBtn').disabled=cur===SLIDES.length-1;
+  document.getElementById('sc').textContent=`${cur+1} / ${SLIDES.length}`;
+  renderDots();
+}
+
+function renderDots(){
+  const row=document.getElementById('dotsRow');
+  row.innerHTML='';
+  SLIDES.forEach((_,i)=>{
+    const d=document.createElement('button');
+    d.className='dot'+(i===cur?' active':'');
+    d.setAttribute('aria-label',`Diapositiva ${i+1}`);
+    d.onclick=()=>{cur=i;renderSlide();};
+    row.appendChild(d);
+  });
+}
+
+function go(dir){
+  cur=Math.max(0,Math.min(SLIDES.length-1,cur+dir));
+  renderSlide();
+}
+
+document.getElementById('pres').addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key==='ArrowDown'){go(1);e.preventDefault();}
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp'){go(-1);e.preventDefault();}
+});
+
+renderSlide();
+</script>
