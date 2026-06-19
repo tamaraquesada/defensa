@@ -3109,11 +3109,48 @@ html,body{width:100%;height:100%;background:#050D15;font-family:system-ui,-apple
 .cep-fecha{font-size:10px;color:rgba(255,255,255,0.16);margin-top:2px}
 
 .fs-btn{position:fixed;top:12px;right:12px;background:rgba(107,165,128,0.12);border:1px solid rgba(107,165,128,0.25);border-radius:7px;padding:5px 12px;font-size:10px;cursor:pointer;color:#8DC4A3;font-family:system-ui,sans-serif;z-index:100}
+
+.sidebar{position:absolute;left:0;top:0;bottom:0;width:172px;background:rgba(0,0,0,0.35);border-right:1px solid rgba(255,255,255,0.06);display:flex;flex-direction:column;padding:18px 0;z-index:10}
+.sb-logo{padding:0 14px 14px;border-bottom:1px solid rgba(255,255,255,0.06);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.sb-logo-text{font-size:8.5px;color:rgba(255,255,255,0.3);line-height:1.4}
+.sb-items{flex:1;overflow:hidden;padding:0 8px}
+.sb-item{display:flex;align-items:center;gap:7px;padding:5px 8px;border-radius:6px;margin-bottom:1px;cursor:pointer}
+.sb-item:hover{background:rgba(255,255,255,0.05)}
+.sb-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.15);flex-shrink:0}
+.sb-num{font-size:8px;color:rgba(255,255,255,0.2);flex-shrink:0;min-width:14px}
+.sb-label{font-size:9.5px;color:rgba(255,255,255,0.35);line-height:1.3;cursor:pointer}
+.sb-bottom{padding:10px 14px 0;border-top:1px solid rgba(255,255,255,0.06);margin-top:6px}
+.sb-home{display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:6px;cursor:pointer;background:rgba(107,165,128,0.08);border:1px solid rgba(107,165,128,0.15)}
+.sb-home-label{font-size:9px;color:#8DC4A3;font-weight:500}
 </style>
 </head>
 <body>
 <div id=&quot;scaler-wrap&quot;>
-<div id=&quot;stage&quot; onclick=&quot;mostrarFrase()&quot;><div onclick=&quot;window.parent.postMessage({type:'toggleSidebar'},'*')&quot; style=&quot;position:absolute;top:8px;left:8px;z-index:30;background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.1);border-radius:6px;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:13px;color:rgba(255,255,255,0.3);cursor:pointer;user-select:none&quot;>☰</div>
+<div id=&quot;stage&quot;><div onclick=&quot;window.parent.postMessage({type:'toggleSidebar'},'*')&quot; style=&quot;position:absolute;top:8px;left:8px;z-index:30;background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.1);border-radius:6px;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:13px;color:rgba(255,255,255,0.3);cursor:pointer;user-select:none&quot;>☰</div>
+  <div class=&quot;sidebar&quot; id=&quot;sidebar-cierre&quot;>
+    <div class=&quot;sb-logo&quot;>
+      <img src=&quot;data:image/png;base64,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&quot; width=&quot;22&quot; height=&quot;22&quot; style=&quot;object-fit:contain;flex-shrink:0&quot;/>
+      <div class=&quot;sb-logo-text&quot;>CEP de Málaga<br>Educación Primaria</div>
+    </div>
+    <div class=&quot;sb-items&quot;>
+      <div class=&quot;sb-item&quot; onclick=&quot;window.parent.postMessage({type:'goTo',sid:'s01'},'*')&quot;><div class=&quot;sb-dot&quot;></div><span class=&quot;sb-num&quot;>01</span><span class=&quot;sb-label&quot;>Marco normativo</span></div>
+      <div class=&quot;sb-item&quot; onclick=&quot;window.parent.postMessage({type:'goTo',sid:'s02'},'*')&quot;><div class=&quot;sb-dot&quot;></div><span class=&quot;sb-num&quot;>02</span><span class=&quot;sb-label&quot;>Fundamentos teóricos</span></div>
+      <div class=&quot;sb-item&quot; onclick=&quot;window.parent.postMessage({type:'goTo',sid:'s03'},'*')&quot;><div class=&quot;sb-dot&quot;></div><span class=&quot;sb-num&quot;>03</span><span class=&quot;sb-label&quot;>Contextualización</span></div>
+      <div class=&quot;sb-item&quot; onclick=&quot;window.parent.postMessage({type:'goTo',sid:'s04'},'*')&quot;><div class=&quot;sb-dot&quot;></div><span class=&quot;sb-num&quot;>04</span><span class=&quot;sb-label&quot;>Modelo de asesoría</span></div>
+      <div class=&quot;sb-item&quot; onclick=&quot;window.parent.postMessage({type:'goTo',sid:'s05'},'*')&quot;><div class=&quot;sb-dot&quot;></div><span class=&quot;sb-num&quot;>05</span><span class=&quot;sb-label&quot;>Diagnóstico</span></div>
+      <div class=&quot;sb-item&quot; onclick=&quot;window.parent.postMessage({type:'goTo',sid:'s06'},'*')&quot;><div class=&quot;sb-dot&quot;></div><span class=&quot;sb-num&quot;>06</span><span class=&quot;sb-label&quot;>Planificación</span></div>
+      <div class=&quot;sb-item&quot; onclick=&quot;window.parent.postMessage({type:'goTo',sid:'s07'},'*')&quot;><div class=&quot;sb-dot&quot;></div><span class=&quot;sb-num&quot;>07</span><span class=&quot;sb-label&quot;>Práctica docente</span></div>
+      <div class=&quot;sb-item&quot; onclick=&quot;window.parent.postMessage({type:'goTo',sid:'s08a'},'*')&quot;><div class=&quot;sb-dot&quot;></div><span class=&quot;sb-num&quot;>08</span><span class=&quot;sb-label&quot;>Dinamización</span></div>
+      <div class=&quot;sb-item&quot; onclick=&quot;window.parent.postMessage({type:'goTo',sid:'s09'},'*')&quot;><div class=&quot;sb-dot&quot;></div><span class=&quot;sb-num&quot;>09</span><span class=&quot;sb-label&quot;>Comp. digital</span></div>
+      <div class=&quot;sb-item&quot; onclick=&quot;window.parent.postMessage({type:'goTo',sid:'s10'},'*')&quot;><div class=&quot;sb-dot&quot;></div><span class=&quot;sb-num&quot;>10</span><span class=&quot;sb-label&quot;>Coordinación</span></div>
+      <div class=&quot;sb-item&quot; onclick=&quot;window.parent.postMessage({type:'goTo',sid:'s11'},'*')&quot;><div class=&quot;sb-dot&quot;></div><span class=&quot;sb-num&quot;>11</span><span class=&quot;sb-label&quot;>Autoevaluación</span></div>
+    </div>
+    <div class=&quot;sb-bottom&quot;>
+      <div class=&quot;sb-home&quot; onclick=&quot;window.parent.postMessage({type:'goTo',sid:'portada'},'*')&quot;>
+        <span style=&quot;font-size:12px&quot;>⌂</span><span class=&quot;sb-home-label&quot;>Portada</span>
+      </div>
+    </div>
+  </div>
 
   <div class=&quot;bg-circle&quot; id=&quot;bgCircle&quot;></div>
 
@@ -3127,7 +3164,7 @@ html,body{width:100%;height:100%;background:#050D15;font-family:system-ui,-apple
   </div>
 
   <!-- CONTENIDO CENTRAL -->
-  <div class=&quot;ideas-wrap&quot; id=&quot;ideasWrap&quot;>
+  <div class=&quot;ideas-wrap&quot; id=&quot;ideasWrap&quot; onclick=&quot;mostrarFrase()&quot; style=&quot;cursor:pointer&quot;>
 
     <!-- IDEAS SIEMPRE VISIBLES -->
     <div class=&quot;ideas-row&quot;>
@@ -3211,7 +3248,7 @@ document.addEventListener('keydown',function(e){
 });
 window.addEventListener('message',function(e){
   if(!e.data||e.data.type!=='toggleSidebar')return;
-  var sb=document.querySelector('.sidebar');
+  var sb=document.getElementById('sidebar-cierre');
   if(!sb)return;
   sb.style.transition='transform 0.25s ease';
   sb.style.transform=e.data.visible?'translateX(0)':'translateX(-172px)';
