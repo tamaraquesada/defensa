@@ -3268,6 +3268,14 @@ function goTo(sid){
   document.getElementById('frame-'+sid).classList.add('active');
   current=sid;
   document.body.focus();
+  // Ocultar sidebar automáticamente al llegar al cierre
+  if(sid==='cierre'){
+    sidebarVisible=false;
+    setTimeout(function(){
+      document.getElementById('frame-cierre').contentWindow
+        .postMessage({type:'toggleSidebar',visible:false},'*');
+    }, 100);
+  }
 }
 function nav(dir){
   var idx=order.indexOf(current);
